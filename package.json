@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/TheTeejers/scraper/issues"
   },
-  "homepage": "https://github.com/TheTeejers/scraper#readme"
+  "homepage": "https://github.com/TheTeejers/scraper#readme",
+  "dependencies": {
+    "puppeteer": "^2.1.1"
+  }
 }
