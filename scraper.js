@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 
+var arrayName = []
 
 async function scrapeProduct(url){
   const browser = await puppeteer.launch();
@@ -18,14 +19,21 @@ async function scrapeProduct(url){
   // const [el3] = await page.$x('//*[@id="buyNewSection"]/a/h5/div/div[2]/div/span[2]');
   // const txt2 = await el3.getProperty('textContent');
   // const price = await txt2.jsonValue();
+  const [name] = await page.$x('//*[@id="lblRacerName"]');
+  const txt = await name.getProperty('textContent');
+  const nameData = await txt.jsonValue();
 
-  const [el] = await page.$x('//*[@id="dg"]/tbody/tr[2]');
-  const txt = await el.getProperty('textContent');
-  const imageURL = await txt.jsonValue();
+  const [el] = await page.$x('//*[@id="dg"]/tbody/tr[.]');
+  const txt1 = await el.getProperty('textContent');
+  const lineData = await txt1.jsonValue();
 
-
+  arrayName.push(lineData)
   // console.log({imageURL, title, price});
-  console.log({imageURL});
+  console.log({nameData});
+  console.log({lineData});
+  console.log(arrayName);
+  // console.log(arrayName[2]);
+  console.log('helo');
 
   await browser.close();
 }
