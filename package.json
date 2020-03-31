@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/TheTeejers/scraper#readme",
   "dependencies": {
+    "firebase": "^7.13.1",
     "puppeteer": "^2.1.1"
   }
 }

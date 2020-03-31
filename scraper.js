@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+var firebase = require("firebase/app");
 
 var arrayName = []
 
@@ -37,11 +38,27 @@ async function scrapeProduct(url){
 
     const [el0] = await page.$x('//*[@id="dg"]/tbody/tr['+i+']/td[1]');
     const txt0 = await el0.getProperty('textContent');
-    const heatType = await txt0.jsonValue();
+    const heatTypeAndKart = await txt0.jsonValue();
+    let heatData = heatTypeAndKart.split(' - Kart ')
+    const heatType = heatData[0]
+    const kartNumberLong = heatData[1]
+    if (kartNumberLong < 10) {
+      var kartNumber = "0".concat(kartNumberLong)
+    } else {
+      var kartNumber = kartNumberLong
+    }
+
+
+
 
     const [el1] = await page.$x('//*[@id="dg"]/tbody/tr['+i+']/td[2]');
     const txt1 = await el1.getProperty('textContent');
-    const dateTime = await txt1.jsonValue();
+    const dateTimeLong = await txt1.jsonValue();
+    const dateTimeShort = dateTimeLong.trim();
+    const dateTimeSplit = dateTimeShort.split(" ")
+    const date = dateTimeSplit[0]
+    const time = dateTimeSplit.splice(1,2).toString().replace(",", " ")
+
 
     const [el2] = await page.$x('//*[@id="dg"]/tbody/tr['+i+']/td[3]');
     const txt2 = await el2.getProperty('textContent');
@@ -53,13 +70,16 @@ async function scrapeProduct(url){
 
     const [el4] = await page.$x('//*[@id="dg"]/tbody/tr['+i+']/td[5]');
     const txt4 = await el4.getProperty('textContent');
-    const position = await txt4.jsonValue();
+    const positionLong = await txt4.jsonValue();
+    const position = positionLong.trim();
 
 
 
-    arrayName.push(heatType, dateTime, k1rs, bestTime, position)
-    console.log(arrayName);
-    // console.log(txt1);
+    // arrayName.push(heatType1, dateTime, k1rs, bestTime, position)
+    var raceData = {heatType, kartNumber, date, time, k1rs, bestTime, position}
+    // console.log(arrayName);
+    console.log(typeof raceData);
+    console.log(raceData);
 
 
 
